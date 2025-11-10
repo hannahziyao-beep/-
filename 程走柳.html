@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>程走柳 · 记得我爱你</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #f7f7f7;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Helvetica Neue", Arial, sans-serif;
+    }
+    .tip-box {
+      position: absolute;
+      min-width: 240px;
+      max-width: 300px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      color: #222;
+      font-size: 15px;
+      line-height: 1.4;
+      cursor: pointer;
+      user-select: none;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+    }
+    .tip-box.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .top-bar {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">每0.3秒跳出一条，共200条 · 点击关闭 · ESC清屏</div>
+
+  <script>
+    const tips = [
+      '天地之宽，出路千千万',
+      '再来一场老派约会吧❤️',
+      '冰箱里放满了荔枝',
+      '烛光下句句真心🕯️',
+      '爱过头不丢人',
+      '程走柳我爱你',
+      '别熬夜，早点休息',
+      '天冷了记得加衣服',
+      '出门前记得吃平安蛋',
+      '别把自己困死在过去',
+      '我想你了 🐿',
+      '一起去吃黄油多士 🍞',
+      '在珠江边随便走走',
+      '点上两杯榴莲白 🥂',
+      '五分钟的幸福',
+      '榕树不容人',
+      '想我了就回来吧',
+      '带着我的那一份好好活',
+      '永远有人在等你回家',
+      '生日快乐 🎂',
+      '我要你干净明澈',
+      '我的命给你了 🐿',
+      '带好对讲机 🐿',
+      '珠水不必凄凉'
+    ];
+
+    const bgColors = [
+      'lightpink', 'skyblue', 'lightgreen', 'lavender',
+      'lightyellow', 'plum', 'coral', 'bisque', 'aquamarine',
+      'mistyrose', 'honeydew', 'lavenderblush', 'oldlace'
+    ];
+
+    function createTipBox() {
+      const box = document.createElement('div');
+      box.className = 'tip-box';
+      box.textContent = tips[Math.floor(Math.random() * tips.length)];
+      box.style.background = bgColors[Math.floor(Math.random() * bgColors.length)];
+
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const boxW = 280;
+      const boxH = 90;
+      const x = Math.random() * (w - boxW);
+      const y = Math.random() * (h - boxH - 20) + 20;
+      box.style.left = x + 'px';
+      box.style.top = y + 'px';
+
+      // 点击关闭
+      box.addEventListener('click', () => box.remove());
+
+      document.body.appendChild(box);
+
+      // 动画效果
+      requestAnimationFrame(() => {
+        box.classList.add('show');
+      });
+    }
+
+    // 控制间隔和数量
+    const INTERVAL = 300; // 0.3秒
+    const MAX_COUNT = 200;
+    let count = 0;
+
+    function loopSpawn() {
+      if (count < MAX_COUNT) {
+        createTipBox();
+        count++;
+        setTimeout(loopSpawn, INTERVAL);
+      }
+    }
+
+    loopSpawn();
+
+    // ESC 清屏
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.tip-box').forEach(el => el.remove());
+      }
+    });
+  </script>
+</body>
+</html>
